@@ -32,6 +32,7 @@ bindkey -v
 
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
+export ZSH_CUSTOM=$HOME/.dotfiles/oh-my-zsh/custom
 
 # Set to the name theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -43,4 +44,3 @@ export ZSH_THEME="prose"
 plugins=(jump)
 
 source $ZSH/oh-my-zsh.sh
-
