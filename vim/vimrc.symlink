@@ -1,0 +1,399 @@
+" .vimrc
+" Author: David Beckingsale
+" Source: https://github.com/davidbeckingsale/dotfiles/blob/master/.vimrc
+"
+" Preamble {{{
+
+filetype off
+set nocompatible
+let mapleader=","
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" }}}
+" Vundle bundles -------- {{{
+
+" Plugin bundles {{{
+
+" let Vundle manage Vundle -- REQUIRED
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-commentary'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/nerdtree'
+Bundle 'jcf/vim-latex'
+Bundle 'ervandew/supertab'
+Bundle 'vim-scripts/argtextobj.vim'
+Bundle 'hsitz/VimOrganizer'
+Bundle 'msanders/snipmate.vim'
+Bundle 'vim-scripts/DoxygenToolkit.vim'
+Bundle 'vim-scripts/opencl.vim--Wierzowiecki'
+Bundle 'kien/ctrlp.vim'
+Bundle 'othree/html5.vim'
+Bundle 'guns/vim-clojure-static'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'scrooloose/syntastic'
+Bundle 'endel/flashdevelop.vim'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'bling/vim-airline'
+
+" }}}
+
+" Colorschemes {{{
+
+Bundle 'proton'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'vim-scripts/vydark'
+Bundle 'vim-scripts/vylight'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'vim-scripts/Liquid-Carbon'
+Bundle 'sjl/badwolf'
+Bundle 'sickill/vim-monokai'
+Bundle 'tomasr/molokai'
+
+" }}}
+
+" My bundles {{{
+
+Bundle 'davidbeckingsale/writegood.vim'
+Bundle 'davidbeckingsale/Smyck-Color-Scheme'
+Bundle 'davidbeckingsale/vword.vim'
+
+" }}}
+" }}}
+" Basic settings {{{
+
+set hidden
+set showmode
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set cpoptions+=$
+set linespace=1 
+set foldcolumn=1
+set listchars=tab:▸\ ,eol:¬
+set list
+set guioptions=ac
+set lazyredraw
+set title
+set synmaxcol=800
+set ch=2
+set vb
+set backspace=2
+set laststatus=2
+set mousehide
+set timeoutlen=400
+set history=1000
+set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
+set scrolloff=3
+set virtualedit+=block
+set colorcolumn=80
+" The highlighting was getting annoying in code, should turn this on for
+" .txt,.md and .tex though
+set nospell
+set completeopt=menuone,longest,preview
+set foldlevel=99
+set number
+set cursorline
+
+" Store swap files in temp
+set directory=/tmp 
+set noswapfile
+
+set undodir=/tmp/.vim/undodir
+set undofile
+set undolevels=1000
+set undoreload=10000
+
+" More natural window split settings
+set splitbelow
+set splitright
+
+syntax on
+filetype plugin on
+filetype indent on
+
+au bufwritepost .vimrc source $MYVIMRC
+
+au VimResized * :wincmd =
+" Searching {{{
+
+" Use sane regexes.
+nnoremap / /\v
+vnoremap / /\v
+
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
+set wrapscan
+set hlsearch
+set gdefault
+
+" }}}
+" Wildmenu completion {{{
+" Taken from http://bitbucket.org/sjl/dotfiles/src/tip/vim/, looks sensible!
+
+set wildmenu
+set wildmode=list:longest
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+
+set wildignore+=*.pyc                            " Python byte code
+
+set wildignore+=*.orig                           " Merge resolution files
+
+" Clojure/Leiningen
+set wildignore+=classes
+
+" }}}
+" Jump to last edited position on re-open {{{
+
+augroup last_cursor_pos
+    autocmd!
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal g`\"" |
+                \ endif
+augroup END
+
+" }}}
+" }}}
+" remaps -------- {{{
+nnoremap <silent> ,ev :e $MYVIMRC<cr>
+
+" Shortcut to rapidly toggle `set list`
+nnoremap <leader>l :set list!<CR>
+
+" Open buffer in Marked
+nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+nnoremap <leader>f :silent !open -a Finder '%:p:h'<cr>
+
+inoremap <c-e> <esc>A
+inoremap <c-a> <esc>I
+inoremap jj <ESC>
+
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
+
+" Mark trailing whitespace as an error
+nnoremap <leader>w match ErrorMsg /\v +$/
+
+" grep for word under cursor
+nnoremap <leader>g :silent execute "grep! -R " . shellescape("<cWORD>") . " ."<cr>:copen<cr>
+
+" Quickfix stuff
+nnoremap <leader>cc :ccl<cr>
+nnoremap <leader>n :cn<cr>
+nnoremap <leader>p :cp<cr>
+
+" No more arrow-keys!
+map <Left> <nop>
+map <Right> <nop>
+map <Down> <nop>
+map <Up> <nop>
+
+" Hard Mode!
+" map j <nop>
+" map k <nop>
+" map h <nop>
+" map l <nop>
+
+map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
+
+" Switch buffers quickly
+nnoremap <leader><leader> <C-^>
+
+" Clear search highlights on enter
+nnoremap <CR> :noh<CR><CR>
+
+" Use \ to go backwards
+noremap \ ,
+" }}}
+" FileType settings -------- {{{
+
+augroup filetype_python
+    autocmd!
+    au FileType py set autoindent
+    au FileType py set smartindent
+    au FileType py set textwidth=79
+    set ofu=syntaxcomplete#Complete
+augroup END
+
+augroup filetype_vim
+    autocmd!
+    auto FileType vim setlocal foldmethod=marker
+augroup END 
+
+augroup filetype_ruby
+    autocmd!
+    au FileType ruby nnoremap <leader>a :A<cr>
+    au FileType ruby nnoremap <leader>r :R<cr>
+augroup END
+
+augroup filetype_tex
+    autocmd!
+    au FileType tex set linebreak
+    au FileType tex set nolist 
+augroup END
+
+augroup filetype_c
+    autocmd!
+    au FileType c set foldmethod=syntax
+    au FileType cpp set foldmethod=syntax
+    au BufRead,BufNewFile *.C set filetype=cpp
+augroup END
+
+augroup filetype_clj
+    autocmd!
+    au FileType clojure RainbowParenthesesToggle
+augroup END
+
+augroup filetype_md
+    autocmd!
+    au BufRead,BufNewFile *.md setlocal textwidth=80
+augroup END
+" }}}
+" Plugin settings {{{
+" VimClojure {{{
+
+let g:vimclojure#HighlightBuiltins=1
+let g:vimclojure#ParenRainbow=1
+let g:vimclojure#WantNailgun=1
+let g:vimclojure#DynamicHighlighting=1
+
+" }}}
+" Powerline {{{
+
+let g:Powerline_symbols = 'fancy'
+let g:Powerline_cache_enabled = 1
+
+" }}}
+" Vim-Latex {{{
+let g:Tex_DefaultTargetFormat = 'pdf'
+
+let g:Tex_CompileRule_dvi = 'latex --interaction=nonstopmode $*'
+let g:Tex_CompileRule_ps = 'dvips -Pwww -o $*.ps $*.dvi'
+let g:Tex_CompileRule_pspdf = 'ps2pdf $*.ps'
+let g:Tex_CompileRule_dvipdf = 'dvipdfm $*.dvi'
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+
+let g:Tex_ViewRule_dvi = 'texniscope'
+let g:Tex_ViewRule_ps = 'Preview'
+let g:Tex_ViewRule_pdf = 'Preview'
+
+let g:Tex_FormatDependency_ps  = 'dvi,ps'
+let g:Tex_FormatDependency_pspdf = 'dvi,ps,pspdf'
+let g:Tex_FormatDependency_dvipdf = 'dvi,dvipdf'
+
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+" }}}
+" DoxygenToolkit --------- {{{
+
+let g:DoxygenToolkit_briefTag_pre=""
+let g:DoxygenToolkit_paramTag_pre="@param "
+let g:DoxygenToolkit_returnTag="@returns "
+let g:DoxygenToolkit_authorName="David Beckingsale"
+
+" }}}
+" NERD Tree {{{
+
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+
+augroup ps_nerdtree
+    au!
+
+    au Filetype nerdtree setlocal nolist
+augroup END
+
+let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                    \ '.*\.o$', 'db.db', 'tags.bak']
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
+let NERDTreeMapJumpFirstChild = 'gK'
+
+" }}}
+" Fugitive {{{
+
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gw :Gwrite<cr>
+nnoremap <leader>ga :Gadd<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gco :Gcheckout<cr>
+nnoremap <leader>gci :Gcommit<cr>
+nnoremap <leader>gm :Gmove<cr>
+nnoremap <leader>gr :Gremove<cr>
+nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
+
+augroup ft_fugitive
+    au!
+
+    au BufNewFile,BufRead .git/index setlocal nolist
+augroup END
+
+" "Hub"
+nnoremap <leader>H :Gbrowse<cr>
+vnoremap <leader>H :Gbrowse<cr>
+
+" }}}
+" SuperTab {{{
+
+let g:SuperTabDefaultCompletionType = "context"
+
+"}}}
+" Syntastic settings {{{
+
+let g:syntastic_check_on_open = 1
+let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+
+" }}}
+" CtrlP settings {{{
+nnoremap <leader>t :CtrlP<CR>
+" }}}
+" Airline settings {{{
+let g:airline_powerline_fonts = 1
+" }}}
+
+" }}}
+" Environment settings {{{
+
+if has('gui_running')
+
+    if has('gui_macvim')
+        set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline:h12
+    else
+        set guifont=Terminus\ 10
+    endif
+
+    set background=dark
+    colorscheme solarized
+
+else
+
+    set background=dark
+    colorscheme solarized
+
+endif
+
+" }}}

@@ -1,0 +1,48 @@
+# command prefix (like screen)
+set -g prefix ^a
+
+# force a reload of the tmux configuration
+unbind r
+bind r source-file ~/tmux.conf
+
+# number windows from 1
+set -g base-index 1
+
+# colors
+set -g default-terminal "xterm-256color"
+
+# unicode
+setw -g utf8 on
+set -g status-utf8 on
+
+# status bar
+set -g status-left "#h:[#S]"
+set -g status-left-length 50
+set -g status-right-length 50
+set -g status-right "%H:%M %d-%h-%Y"
+setw -g window-status-current-format "|#I:#W|"
+setw -g automatic-rename off
+
+# listen to alerts from all windows
+set -g bell-action any
+
+# vim movement for panes
+setw -g mode-keys vi
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# splitting and cycling
+bind V split-window -h # horizontal split
+bind H split-window -v # vertical split
+
+# quick pane cycling
+unbind ^A
+bind ^A select-pane -t :.+
+
+bind Tab last-window
+bind Escape copy-mode
+
+# make windows as big as possible!
+setw -g aggressive-resize on
