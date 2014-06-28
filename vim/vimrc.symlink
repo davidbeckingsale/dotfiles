@@ -42,7 +42,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'endel/flashdevelop.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
-
+Plugin 'rhysd/vim-clang-format'
 " }}}
 
 " Colorschemes {{{
