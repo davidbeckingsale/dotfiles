@@ -1,0 +1,96 @@
+slate.configAll({
+  "defaultToCurrentScreen" : true,
+  "secondsBetweenRepeat" : 0.1,
+  "checkDefaultsOnLoad" : true,
+  "focusCheckWidthMax" : 3000,
+  "orderScreensLeftToRight" : true,
+  "keyboardLayout" : "dvorak",
+  "windowHintsIgnoreHiddenWindows" : false,
+  "windowHintsSpread" : true,
+  "windowHintsShowIcons" : true,
+  "modalEscapeKey" : "esc"
+});
+
+var left = {
+  'x': 'screenOriginX',
+  'y': 'screenOriginY',
+  'width': 'screenSizeX/2',
+  'height': 'screenSizeY',
+};
+
+var right = {
+  'x': 'screenOriginX + screenSizeX/2',
+  'y': 'screenOriginY',
+  'width': 'screenSizeX/2',
+  'height': 'screenSizeY',
+};
+
+function windowRight(win) {
+    var screen = slate.screen().rect();
+    var win_rect = win.rect();
+
+    if(screen.x + screen.width == win_rect.x - win_rect.width) {
+        var curr_screen = slate.screen().id();
+        slate.log(curr_screen);
+        if(curr_screen < slate.screenCount() - 1) {
+            var shift_screen = _.clone(left);
+            shift_screen['screen'] = "" + curr_screen + 1;
+
+            win.doOperation(slate.operation('move', shift_screen));
+        }
+    } else {
+        win.doOperation(slate.operation('move', right));
+    }
+}
+
+
+function windowLeft(win) {
+    var screen = slate.screen().rect();
+    var win_rect = win.rect();
+
+    // if we are at the edge of a screen on the left.
+    if(screen.x == win_rect.x) {
+        var curr_screen = slate.screen().id();
+        if(curr_screen > 0) {
+            var shift_screen = _.clone(right);
+            shift_screen['screen'] = curr_screen - 1;
+
+            win.doOperation(slate.operation('move', shift_screen));
+        }
+    } else {
+        win.doOperation(slate.operation('move', left));
+    }
+}
+
+
+function windowMaximise(win) {
+    win.doOperation(slate.operation('move', {
+        'x': 'screenOriginX',
+        'y': 'screenOriginY',
+        'width': 'screenSizeX',
+        'height': 'screenSizeY',
+    }));
+}
+
+function windowCenter(win) {
+    win.doOperation(slate.operation('move', {
+        'x': 'screenOriginX + screenSizeX/4',
+        'y': 'screenOriginY + screenSizeY/4',
+        'width': 'screenSizeX/2',
+        'height': 'screenSizeY/2',
+    }));
+}
+
+
+slate.bindAll({
+  "r:s,cmd,alt,ctrl" : slate.operation("relaunch"),
+  "g:s,cmd,alt,ctrl" : slate.operation("grid"),
+  "s:s,cmd,alt,ctrl" : slate.operation("hint", { "characters" : "HTSNGCLRMWVZ"}),
+  "l:w,cmd,alt,ctrl" : windowRight,
+  "h:w,cmd,alt,ctrl" : windowLeft,
+  "k:w,cmd,alt,ctrl" : windowMaximise,
+  "j:w,cmd,alt,ctrl" : windowCenter,
+  "t:cmd,alt,ctrl" : slate.op("focus",  { "app" : "iTerm" })
+});
+
+slate.log("[SLATE] -------------- Config loaded ------------------------");
