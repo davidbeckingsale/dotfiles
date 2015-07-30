@@ -6,7 +6,7 @@
 
 filetype off
 set nocompatible
-let mapleader=","
+let mapleader="\<Space>"
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
@@ -36,6 +36,11 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'junegunn/limelight.vim'
 Plugin 'reedes/vim-colors-pencil'
+Plugin 'mtth/scratch.vim'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'salsifis/vim-transpose'
+Plugin 'benmills/vimux'
+Plugin 'vim-scripts/gitignore'
 " }}}
 
 " Colorschemes {{{
@@ -212,6 +217,12 @@ nnoremap <leader><leader> <C-^>
 " Clear search highlights on enter
 nnoremap <CR> :noh<CR>
 
+" Yank text to OS X clipboard
+noremap <leader>y "*y
+
+" Open and save files with leader
+nnoremap <leader>o :CtrlP<CR>
+nnoremap <leader>w :w<CR>
 " }}}
 " FileType settings -------- {{{
 
@@ -355,6 +366,9 @@ let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#textwidth = 80
 let g:airline_section_x = '%{PencilMode()}'
 " }}}
+" scratch.vim settings {{{
+nnoremap <leader>s :Scratch<CR>
+" }}}
 
 " }}}
 " Environment settings {{{
@@ -372,8 +386,8 @@ if has('gui_running')
 
 else
 
-    set background=light
-    colorscheme solarized
+    set background=dark
+    colorscheme jellybeans
 
 endif
 

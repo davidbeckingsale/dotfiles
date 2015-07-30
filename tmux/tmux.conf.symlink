@@ -15,12 +15,8 @@ set -g default-terminal "xterm-256color"
 setw -g utf8 on
 set -g status-utf8 on
 
-# status bar
-set -g status-left "#h:[#S]"
-set -g status-left-length 50
-set -g status-right-length 50
-set -g status-right "%H:%M %d-%h-%Y"
-setw -g window-status-current-format "|#I:#W|"
+# let tmuxline handle the status bar
+if-shell "test -f ~/.tmux/theme" "source ~/.tmux/theme"
 setw -g automatic-rename off
 
 # listen to alerts from all windows
