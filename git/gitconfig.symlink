@@ -3,10 +3,10 @@
 	email = davidbeckingsale@gmail.com
 
 [merge]
-	tool = mvimdiff
+	tool = nvimdiff
 
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.gitignore
 
 [color]
@@ -34,3 +34,6 @@
 	r = reset
 	p = push
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+[push]
+	default = simple
