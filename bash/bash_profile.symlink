@@ -1,2 +1,5 @@
 #!/bin/bash
 /usr/bin/env zsh
+
+# added by Anaconda2 4.1.1 installer
+export PATH="/Users/beckingsale1/anaconda/bin:$PATH"

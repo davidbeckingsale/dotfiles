@@ -42,3 +42,7 @@ export ZSH_THEME="prose"
 plugins=(jump)
 
 source $ZSH/oh-my-zsh.sh
+
+export SHELL=/usr/local/bin/zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
