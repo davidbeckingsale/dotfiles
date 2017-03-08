@@ -10,8 +10,8 @@ if &compatible
 endif
 let mapleader=","
 
-set rtp^=/Users/beckingsale1/.vim/dein/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('/Users/beckingsale1/.vim/dein/'))
+set rtp^=/home/beckingsale1/.vim/dein/repos/github.com/Shougo/dein.vim
+call dein#begin(expand('/home/beckingsale1/.vim/dein/'))
 
 " Let dein manage dein
 " REQUIRED
