@@ -4,6 +4,8 @@ export DOTZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Projects
 
+export _Z_DATA=~/.zsh/z-dirjump-list.txt
+
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
 if [[ -a ~/.localrc ]]
@@ -38,3 +40,8 @@ do
 done
 
 unset config_files
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# added by travis gem
+[ -f /Users/beckingsale1/.travis/travis.sh ] && source /Users/beckingsale1/.travis/travis.sh
