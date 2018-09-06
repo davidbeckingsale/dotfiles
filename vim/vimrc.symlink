@@ -10,25 +10,31 @@ if &compatible
 endif
 let mapleader=","
 
-call plug#begin('~/.local/share/nvim/plugged')
+set rtp+=~/.local/share/dein/repos/github.com/Shougo/dein.vim
 
-Plug 'Shougo/dein.vim'
-Plug 'Shougo/denite.nvim'
-Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --clang-completer' }
-Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'davidbeckingsale/Smyck-Color-Scheme'
-Plug 'endel/vim-github-colorscheme'
-Plug 'nanotech/jellybeans.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'do': './install --all'} 
-Plug 'junegunn/fzf.vim', { 'depends': 'fzf' }
-Plug 'edkolev/tmuxline.vim'
-Plug 'tpope/vim-dispatch'
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
-call plug#end()
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/denite.nvim')
+  call dein#add('Valloric/YouCompleteMe', { 'build' : './install.py --clang-completer' })
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('davidbeckingsale/Smyck-Color-Scheme')
+  call dein#add('endel/vim-github-colorscheme')
+  call dein#add('nanotech/jellybeans.vim')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('junegunn/fzf', { 'build': './install --all'} )
+  call dein#add('junegunn/fzf.vim')
+  call dein#add('edkolev/tmuxline.vim')
+  call dein#add('tpope/vim-dispatch')
+
+  call dein#end()
+  call dein#save_state()
+endif
+
 
 " Basic settings {{{
 
@@ -78,7 +84,7 @@ set undoreload=10000
 set splitbelow
 set splitright
 
-syntax on
+syntax enable
 filetype plugin on
 filetype indent on
 
@@ -189,7 +195,6 @@ nnoremap <CR> :noh<CR>
 noremap <leader>y "*y
 
 " Open and save files with leader
-nnoremap <leader>o :CtrlP<CR>
 nnoremap <leader>w :w<CR>
 
 " Get into normal mode with ESC from terminal
@@ -283,7 +288,7 @@ augroup END
 
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
-                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                    \ 'xapian_index', '.*.pid', 'monitor.py',
                     \ '.*\.o$', 'db.db', 'tags.bak']
 
 let NERDTreeMinimalUI = 1
@@ -324,14 +329,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
 " }}}
-" CtrlP settings {{{
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>t :CtrlPMixed<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
+" Denite settings {{{
+nnoremap <leader>f :<C-u>Denite file_rec<CR>
+nnoremap <leader>b :<C-u>Denite buffer<CR>
+nnoremap <leader>t :<C-u>Denite file_rec buffer<CR>
 " }}}
+"
 " Airline settings {{{
 let g:airline_powerline_fonts = 1
 let g:airline_theme='cool'

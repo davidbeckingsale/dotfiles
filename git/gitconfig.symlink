@@ -3,10 +3,10 @@
 	email = davidbeckingsale@gmail.com
 
 [merge]
-	tool = nvimdiff
+	tool = vimdiff
 
 [core]
-	editor = nvim
+	editor = vim
 	excludesfile = ~/.gitignore
 
 [color]

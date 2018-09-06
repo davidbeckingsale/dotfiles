@@ -1,5 +1,5 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias vim=nvim
+  alias vim=vim
 fi
 
 alias e="vim"
