@@ -1,3 +1,0 @@
-note() {
-    echo "$@[2,10000]" > ~/Dropbox/notes/$1
-}

@@ -1,0 +1,45 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# git aliases (require my .gitconfig)
+alias g='git'
+alias gp='g p'
+alias gl='g l'
+alias s='g s'
+alias d='g d'
+alias gc='g c'
+
+# OSX aliases
+alias pp="open -a Preview"
+alias f="open -a Finder ."
+
+cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
+}
+
+
+# jobs aliases
+alias ff=fg
+alias gf=fg
+
+alias .="cd .."
+
+alias c='clear'
+alias l='ls -CF'
+alias ll='ls -lh'
+alias la='ls -a'
+alias lsa='ls -ld .*'

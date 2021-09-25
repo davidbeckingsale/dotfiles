@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /opt/homebrew/bin/python3
+  tasks:
+    - name: 'add custom homebrew taps'
+      community.general.homebrew_tap:
+        name: homebrew/cask-versions
+    - name: "install homebrew packages"
+      community.general.homebrew:
+        name: [
+          'gh',
+          'git',
+          'gnupg'
+        ]
+    - name: "install homebrew casks"
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+      with_items:
+        - iterm2
+        - visual-studio-code-insiders
+    - name: 'install zprezto'
+      shell: git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+      args:
+        creates: "/Users/{{ lookup('env', 'USER') }}/.zprezto"
+    - name: 'find configs'
+      find:
+        paths: '{{ playbook_dir }}/config/'
+        depth: 2
+        recurse: yes
+      register: configs
+    - name: 'install config symlinks'
+      file:
+        src: "{{ item.path }}"
+        path: "~/.{{ item.path | basename }}"
+        state: link
+        force: yes
+      with_items: "{{ configs.files }}"
+    - name: Install VSCode extensions
+      shell: code-insiders --install-extension {{ item }}
+      with_items:
+        - vscodevim.vim
+        - zhuangtongfa.Material-theme
