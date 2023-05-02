@@ -1,0 +1,51 @@
+---
+
+- name: 'check brew directory'
+  file: 
+    path: /usr/local/*
+    state: directory
+    mode: 0775
+    owner: root
+    group: wheel
+    recurse: yes
+  become: yes
+
+- name: 'download homebrew script'
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/master/install
+    dest: /tmp/install
+
+- name: 'install homebrew'
+  shell: /usr/bin/ruby /tmp/install < /dev/null
+
+- name: 'add custom homebrew taps'
+  community.general.homebrew_tap:
+    name: homebrew/cask-versions
+- name: "install homebrew packages"
+  community.general.homebrew:
+    name: [
+      'gh',
+      'git',
+      'gnupg',
+      'zsh',
+      'cmake',
+      'llvm',
+      'gcc',
+      'ninja'
+
+
+    ]
+- name: "install homebrew casks"
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+  with_items:
+    - 1password
+    - alfred
+    - iterm2
+    - mactex
+    - mattermost
+    - omnifocus
+    - omnigraffle
+    - omnioutliner
+    - slack
+    - visual-studio-code-insiders

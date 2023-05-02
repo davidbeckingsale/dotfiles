@@ -2,23 +2,10 @@
 - hosts: localhost
   vars:
     ansible_python_interpreter: /opt/homebrew/bin/python3
+  roles:
+    - role: elliotweiser.osx-command-line-tools
   tasks:
-    - name: 'add custom homebrew taps'
-      community.general.homebrew_tap:
-        name: homebrew/cask-versions
-    - name: "install homebrew packages"
-      community.general.homebrew:
-        name: [
-          'gh',
-          'git',
-          'gnupg'
-        ]
-    - name: "install homebrew casks"
-      community.general.homebrew_cask:
-        name: "{{ item }}"
-      with_items:
-        - iterm2
-        - visual-studio-code-insiders
+    - import_tasks: tasks/homebrew.yml
     - name: 'install zprezto'
       shell: git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
       args:
@@ -40,4 +27,7 @@
       shell: code-insiders --install-extension {{ item }}
       with_items:
         - vscodevim.vim
-        - zhuangtongfa.Material-theme
+        - ms-vscode.cpptools
+        - twxs.cmake
+        - ms-vscode.cmake-tools
+        - ms-vscode-remote.remote-ssh
