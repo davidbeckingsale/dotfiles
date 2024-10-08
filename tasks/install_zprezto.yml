@@ -1,0 +1,6 @@
+---
+
+- name: 'install zprezto'
+  shell: git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+  args:
+    creates: "{{ lookup('env', 'HOME') }}/.zprezto"

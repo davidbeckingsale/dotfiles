@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks:
+    - import_tasks: tasks/install_zprezto.yml
+    - import_tasks: tasks/setup_configs.yml

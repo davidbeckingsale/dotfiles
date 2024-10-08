@@ -12,11 +12,11 @@
 
 - name: 'download homebrew script'
   get_url:
-    url: https://raw.githubusercontent.com/Homebrew/install/master/install
+    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     dest: /tmp/install
 
 - name: 'install homebrew'
-  shell: /usr/bin/ruby /tmp/install < /dev/null
+  shell: /bin/bash /tmp/install < /dev/null
 
 - name: 'add custom homebrew taps'
   community.general.homebrew_tap:
@@ -31,8 +31,9 @@
       'cmake',
       'llvm',
       'gcc',
-      'ninja'
-
+      'ninja',
+      'docker',
+      'colima'
 
     ]
 - name: "install homebrew casks"
